@@ -1,4 +1,4 @@
-package com.nimolee.addressbooksample.di
+package com.nimolee.addressbooksample.tools.di
 
 import androidx.room.Room
 import com.nimolee.addressbooksample.data.ContactsDatabase
