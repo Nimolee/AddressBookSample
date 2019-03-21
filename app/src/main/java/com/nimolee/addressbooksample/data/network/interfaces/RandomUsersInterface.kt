@@ -5,6 +5,6 @@ import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 
 interface RandomUsersInterface {
-    @GET("?results=5&noinfo")
+    @GET("?results=10&noinfo")
     fun getUsersAsync(): Deferred<RandomMeEntity>
 }

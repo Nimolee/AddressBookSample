@@ -26,7 +26,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
             android:autoSizeTextType="uniform"
-            android:gravity="start"
+            android:gravity="left"
             android:lines="1"
             android:textSize="26sp"
             android:textStyle="bold"
@@ -34,7 +34,8 @@
             app:layout_constraintStart_toEndOf="@id/item_contact_avatar"
             app:layout_constraintTop_toTopOf="parent"
             tools:targetApi="o"
-            tools:text="@tools:sample/full_names" />
+            tools:text="@tools:sample/full_names"
+            tools:ignore="RtlHardcoded" />
 
         <TextView
             android:id="@+id/item_contact_phone"
@@ -57,12 +58,13 @@
             android:layout_marginStart="4dp"
             android:drawableStart="@drawable/ic_email_black_24dp"
             android:drawableTint="@color/colorPrimaryDark"
-            android:gravity="start|center_vertical"
+            android:gravity="left|center_vertical"
             android:lines="1"
             app:layout_constraintEnd_toEndOf="@id/item_contact_name"
             app:layout_constraintStart_toEndOf="@id/item_contact_avatar"
             app:layout_constraintTop_toBottomOf="@id/item_contact_phone"
-            tools:text="sample@sample.com" />
+            tools:text="sample@sample.com"
+            tools:ignore="RtlHardcoded" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
