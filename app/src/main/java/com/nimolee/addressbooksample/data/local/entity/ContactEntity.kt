@@ -1,4 +1,4 @@
-package com.nimolee.addressbooksample.data.entity
+package com.nimolee.addressbooksample.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

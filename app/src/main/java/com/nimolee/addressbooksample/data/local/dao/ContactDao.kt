@@ -1,10 +1,10 @@
-package com.nimolee.addressbooksample.data.dao
+package com.nimolee.addressbooksample.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.nimolee.addressbooksample.data.entity.ContactEntity
+import com.nimolee.addressbooksample.data.local.entity.ContactEntity
 
 @Dao
 interface ContactDao {

@@ -5,5 +5,4 @@ import com.nimolee.addressbooksample.data.Repository
 
 class MainViewModel(repository: Repository) : ViewModel() {
     private val _repository = repository
-
 }

@@ -1,4 +1,4 @@
-package com.nimolee.addressbooksample.data
+package com.nimolee.addressbooksample.data.local
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
