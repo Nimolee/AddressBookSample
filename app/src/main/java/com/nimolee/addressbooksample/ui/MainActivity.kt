@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.nimolee.addressbooksample.R
-import com.nimolee.addressbooksample.ui.recomended.RecomendedFragment
+import com.nimolee.addressbooksample.ui.recomended.RecommendedFragment
 import com.nimolee.addressbooksample.ui.saved.SavedFragment
 import com.nimolee.addressbooksample.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,7 +20,7 @@ class MainActivity : FragmentActivity(), NavigationInterface {
         main_bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.main_menu_saved_contacts -> openFragment(SavedFragment())
-                R.id.main_menu_recommended_contacts -> openFragment(RecomendedFragment())
+                R.id.main_menu_recommended_contacts -> openFragment(RecommendedFragment())
                 R.id.main_menu_settings -> openFragment(SettingsFragment())
             }
             true
