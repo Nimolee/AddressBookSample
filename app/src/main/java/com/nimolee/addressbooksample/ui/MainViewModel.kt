@@ -9,6 +9,8 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(repository: Repository) : ViewModel() {
     val randomUserLiveData: MutableLiveData<ArrayList<Contact>> = MutableLiveData()
+    var selectedContact: Contact? = null
+    var profileMode: Int? = null
 
     private val _repository = repository
 

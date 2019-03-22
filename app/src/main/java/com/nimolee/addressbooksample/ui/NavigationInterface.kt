@@ -6,4 +6,6 @@ interface NavigationInterface {
     fun openFragment(fragment: Fragment)
 
     fun openFragmentWithBackstack(fragment: Fragment)
+
+    fun back()
 }

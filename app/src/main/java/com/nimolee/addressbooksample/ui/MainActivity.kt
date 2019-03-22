@@ -1,6 +1,7 @@
 package com.nimolee.addressbooksample.ui
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -27,12 +28,31 @@ class MainActivity : FragmentActivity(), NavigationInterface {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun openFragment(fragment: Fragment) {
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        supportFragmentManager.beginTransaction().replace(R.id.main_fragment_container, fragment).commit()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_fragment_container, fragment)
+            .commit()
     }
 
     override fun openFragmentWithBackstack(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.main_fragment_container, fragment).commit()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    override fun back() {
+        supportFragmentManager.popBackStack()
     }
 }

@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.item_contacts.view.*
 class RecommendedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun onBindView(item: Contact) {
         with(itemView) {
-            val fullName = "${item.name.toCapitalize()} ${item.surname.toCapitalize()}"
+            val fullName = "${item.name} ${item.surname}"
             item_contact_name.text = fullName
             if (item.email.isNotBlank()) {
                 item_contact_email.text = item.email
@@ -24,9 +24,5 @@ class RecommendedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             }
             item_contact_avatar.setImageBitmap(item.photo)
         }
-    }
-
-    private fun String.toCapitalize(): String {
-        return replaceFirst(first(), first().toUpperCase())
     }
 }

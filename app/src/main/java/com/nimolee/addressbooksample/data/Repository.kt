@@ -5,11 +5,12 @@ import com.nimolee.addressbooksample.data.local.ContactsSharedPreferences
 import com.nimolee.addressbooksample.data.network.interfaces.RandomFactInterface
 import com.nimolee.addressbooksample.data.network.interfaces.RandomUsersInterface
 import com.nimolee.addressbooksample.data.wrappers.Contact
+import com.nimolee.addressbooksample.data.wrappers.Date
 import com.nimolee.addressbooksample.data.wrappers.Fact
+import com.nimolee.addressbooksample.tools.toCapitalize
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.runBlocking
 import retrofit2.Retrofit
-import java.text.SimpleDateFormat
 import java.util.*
 
 class Repository(
@@ -28,19 +29,20 @@ class Repository(
             _usersRetrofit.getUsersAsync().await()
         }
         val usersWrapped = arrayListOf<Contact>()
-        val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        val datePattern = Regex("(.+)-(.+)-(.+)T")
         users.results?.forEach {
             val photoBitmap = runBlocking {
                 Picasso.get().load(it.picture.large).get()
             }
+            val dateRes = datePattern.find(it.dob.date) ?: error(it.dob.date)
             usersWrapped.add(
                 Contact(
-                    name = it.name.first,
-                    surname = it.name.last,
+                    name = it.name.first.toCapitalize(),
+                    surname = it.name.last.toCapitalize(),
                     gender = it.gender == "male",
                     email = it.email,
                     phone = it.phone,
-                    birthday = dateFormatter.parse(it.dob.date),
+                    birthday = Date(dateRes.groupValues[1], dateRes.groupValues[2], dateRes.groupValues[3]),
                     photo = photoBitmap
                 )
             )
