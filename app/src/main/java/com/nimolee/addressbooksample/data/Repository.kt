@@ -2,10 +2,10 @@ package com.nimolee.addressbooksample.data
 
 import com.nimolee.addressbooksample.data.local.ContactsDatabase
 import com.nimolee.addressbooksample.data.local.ContactsSharedPreferences
-import com.nimolee.addressbooksample.data.network.entity.RandomFactEntity
 import com.nimolee.addressbooksample.data.network.interfaces.RandomFactInterface
 import com.nimolee.addressbooksample.data.network.interfaces.RandomUsersInterface
 import com.nimolee.addressbooksample.data.wrappers.Contact
+import com.nimolee.addressbooksample.data.wrappers.Fact
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.runBlocking
 import retrofit2.Retrofit
@@ -48,9 +48,13 @@ class Repository(
         return usersWrapped
     }
 
-    fun getRandomFactAwait(): RandomFactEntity {
-        return runBlocking {
+    fun getRandomFactAwait(): Fact {
+        val fact = runBlocking {
             _factRetrofit.getRandomFactAsync().await()
         }
+        return Fact(
+            source = fact.source,
+            text = fact.text
+        )
     }
 }
