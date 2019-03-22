@@ -1,5 +1,7 @@
 package com.nimolee.addressbooksample.ui.profile
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,11 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class ProfileFragment : MainFragment() {
+    companion object {
+        const val MODE_SAVED = 0
+        const val MODE_RECOMENDED = 1
+    }
+
     private val _viewModel: MainViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -22,6 +29,7 @@ class ProfileFragment : MainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val contact = _viewModel.selectedContact ?: return
+        val mode = _viewModel.profileMode ?: return
         profile_back.setOnClickListener { navigation.back() }
         profile_avatar.setImageBitmap(contact.photo)
         profile_name.editText?.setText(contact.name)
@@ -36,6 +44,26 @@ class ProfileFragment : MainFragment() {
                 contact.birthday = it
                 profile_birthday.editText?.setText(it.toString())
             }.show(requireFragmentManager(), "")
+        }
+        profile_make_call.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:${contact.phone}")
+            startActivity(intent)
+        }
+        profile_send_email.setOnClickListener {
+            val emailIntent = Intent(
+                Intent.ACTION_SENDTO, Uri.fromParts(
+                    "mailto", contact.email, null
+                )
+            )
+            startActivity(Intent.createChooser(emailIntent, "Send email..."))
+        }
+        when (mode) {
+            MODE_SAVED -> {
+                profile_special.setImageResource(R.drawable.ic_person_add_white_24dp)
+            }
+            MODE_RECOMENDED -> {
+            }
         }
     }
 
