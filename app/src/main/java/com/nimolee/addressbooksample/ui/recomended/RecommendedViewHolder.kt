@@ -2,13 +2,13 @@ package com.nimolee.addressbooksample.ui.recomended
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.nimolee.addressbooksample.data.network.entity.ResultsItem
+import com.nimolee.addressbooksample.data.wrappers.Contact
 import kotlinx.android.synthetic.main.item_contacts.view.*
 
 class RecommendedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    fun onBindView(item: ResultsItem) {
+    fun onBindView(item: Contact) {
         with(itemView) {
-            val fullName = "${item.name.first.toCapitalize()} ${item.name.last.toCapitalize()}"
+            val fullName = "${item.name.toCapitalize()} ${item.surname.toCapitalize()}"
             item_contact_name.text = fullName
             if (item.email.isNotBlank()) {
                 item_contact_email.text = item.email
@@ -22,8 +22,8 @@ class RecommendedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             } else {
                 item_contact_phone.visibility = View.GONE
             }
+            item_contact_avatar.setImageBitmap(item.photo)
         }
-        //TODO: Load image
     }
 
     private fun String.toCapitalize(): String {
