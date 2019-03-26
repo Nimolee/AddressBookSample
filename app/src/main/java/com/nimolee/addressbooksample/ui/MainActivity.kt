@@ -38,6 +38,7 @@ class MainActivity : FragmentActivity(), NavigationInterface {
         _viewModel.bottomBarVisibilityLiveData.observe(this, Observer {
             main_bottom_navigation.visibility = if (it) View.VISIBLE else View.GONE
         })
+        openFragment(SavedFragment())
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

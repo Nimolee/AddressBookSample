@@ -31,7 +31,12 @@ class MainViewModel(repository: Repository) : ViewModel() {
 
     fun getSavedContacts() {
         GlobalScope.launch {
-            savedUserLiveData.postValue(_repository.getSavedContacts())
+            _repository.getSavedContacts().also { array ->
+                array.sortBy {
+                    "${it.name} ${it.surname}"
+                }
+                savedUserLiveData.postValue(array)
+            }
         }
     }
 }
