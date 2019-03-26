@@ -9,8 +9,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.graphics.drawable.toBitmap
+import com.google.android.material.snackbar.Snackbar
 import com.nimolee.addressbooksample.R
 import com.nimolee.addressbooksample.data.wrappers.Contact
+import com.nimolee.addressbooksample.data.wrappers.Date
 import com.nimolee.addressbooksample.ui.MainActivity.Companion.FRAGMENT_SAVED
 import com.nimolee.addressbooksample.ui.MainFragment
 import com.nimolee.addressbooksample.ui.MainViewModel
@@ -81,8 +84,32 @@ class ProfileFragment : MainFragment() {
                 .show()
         }
         profile_edit_mode.setOnClickListener {
-
+            if (validateFields()) {
+                val datePattern = Regex("(.+)-(.+)-(.+)")
+                val dateRes = datePattern.find(profile_birthday.editText?.text.toString())
+                    ?: error(profile_birthday.editText?.text.toString())
+                val result = Contact(
+                    contact.id,
+                    profile_name.editText?.text.toString(),
+                    profile_surname.editText?.text.toString(),
+                    profile_gender.selectedItemPosition == 0,
+                    profile_email.editText?.text.toString(),
+                    profile_phone.editText?.text.toString(),
+                    Date(dateRes.groupValues[1], dateRes.groupValues[2], dateRes.groupValues[3]),
+                    profile_avatar.drawable.toBitmap()
+                )
+                _viewModel.updateContact(result)
+                navigation.openMainFragment(FRAGMENT_SAVED)
+            } else {
+                Snackbar.make(it, "Please, enter valid name.", Snackbar.LENGTH_LONG).show()
+            }
         }
+    }
+
+    private fun validateFields(): Boolean {
+        val name = profile_name.editText?.text.toString()
+        val surname = profile_surname.editText?.text.toString()
+        return name.isNotBlank() || surname.isNotBlank()
     }
 
     private fun setupRecommended(contact: Contact) {

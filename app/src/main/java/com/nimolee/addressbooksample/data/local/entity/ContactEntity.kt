@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Contacts")
 data class ContactEntity(
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
     @ColumnInfo(name = "first_name") var firstName: String,
     @ColumnInfo(name = "last_name") var lastName: String,
     @ColumnInfo(name = "email") var email: String?,
@@ -14,7 +15,7 @@ data class ContactEntity(
     @ColumnInfo(name = "dob") var birthdayString: String,
     @ColumnInfo(name = "photo", typeAffinity = ColumnInfo.BLOB) var photo: ByteArray?
 ) {
-    @PrimaryKey(autoGenerate = true) var id: Int = 0
+
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

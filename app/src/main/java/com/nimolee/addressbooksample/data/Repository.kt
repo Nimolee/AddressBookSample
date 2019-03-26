@@ -113,4 +113,21 @@ class Repository(
             _database.contactDao().removeContact(id)
         }
     }
+
+    fun updateContact(contact: Contact) {
+        val stream = ByteArrayOutputStream()
+        contact.photo?.compress(Bitmap.CompressFormat.WEBP, 100, stream)
+        contact.id ?: return
+        val entity = ContactEntity(
+            contact.id!!,
+            contact.name,
+            contact.surname,
+            contact.email,
+            contact.phone,
+            contact.gender,
+            contact.birthday.toString(),
+            stream.toByteArray()
+        )
+        _database.contactDao().updateContact(entity)
+    }
 }

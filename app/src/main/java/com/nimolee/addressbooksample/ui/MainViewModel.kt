@@ -48,4 +48,11 @@ class MainViewModel(repository: Repository) : ViewModel() {
             }
         }
     }
+
+    fun updateContact(contact: Contact) {
+        GlobalScope.launch {
+            _repository.updateContact(contact)
+            getSavedContacts()
+        }
+    }
 }
