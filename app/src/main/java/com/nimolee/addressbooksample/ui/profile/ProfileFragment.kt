@@ -1,5 +1,6 @@
 package com.nimolee.addressbooksample.ui.profile
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -16,6 +17,8 @@ import com.nimolee.addressbooksample.data.wrappers.Contact
 import com.nimolee.addressbooksample.data.wrappers.Date
 import com.nimolee.addressbooksample.ui.MainFragment
 import com.nimolee.addressbooksample.ui.MainViewModel
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -34,6 +37,14 @@ class ProfileFragment : MainFragment() {
         when (contact.id) {
             null -> setupRecommended(contact)
             else -> setupSaved(contact)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val result = CropImage.getActivityResult(data)
+            profile_avatar.setImageURI(result.uri)
         }
     }
 
@@ -69,6 +80,14 @@ class ProfileFragment : MainFragment() {
                 )
             )
             startActivity(Intent.createChooser(emailIntent, "Send email..."))
+        }
+        profile_camera.setOnClickListener {
+            CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON_TOUCH)
+                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .setRequestedSize(512, 512)
+                .setAspectRatio(1, 1)
+                .start(requireContext(), this)
         }
     }
 
@@ -131,6 +150,7 @@ class ProfileFragment : MainFragment() {
         profile_birthday.isEnabled = false
         profile_phone.isEnabled = false
         profile_email.isEnabled = false
+        profile_camera.isEnabled = false
     }
 
     private class GenderSpinnerAdapter : BaseAdapter() {

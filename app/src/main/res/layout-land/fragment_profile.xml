@@ -28,6 +28,17 @@
         app:layout_constraintStart_toStartOf="@id/profile_avatar"
         app:layout_constraintTop_toTopOf="@id/profile_avatar" />
 
+    <ImageButton
+        android:id="@+id/profile_camera"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="end"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_photo_camera_white_24dp"
+        app:layout_constraintEnd_toEndOf="@id/profile_avatar"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <View
         android:id="@+id/view"
         android:layout_width="0dp"

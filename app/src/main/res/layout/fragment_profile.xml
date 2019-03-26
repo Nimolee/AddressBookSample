@@ -232,6 +232,15 @@
                 android:src="@drawable/ic_arrow_back_black_24dp"
                 android:tint="@android:color/white" />
 
+            <ImageButton
+                android:id="@+id/profile_camera"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="end"
+                android:background="@null"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_photo_camera_white_24dp" />
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>

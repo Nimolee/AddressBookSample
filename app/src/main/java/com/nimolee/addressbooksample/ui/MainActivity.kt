@@ -84,6 +84,4 @@ class MainActivity : FragmentActivity(), NavigationInterface {
             .replace(R.id.main_fragment_container, fragment)
             .commit()
     }
-
-
 }
