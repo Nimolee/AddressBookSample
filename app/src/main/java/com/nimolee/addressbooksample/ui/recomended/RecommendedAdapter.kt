@@ -26,7 +26,6 @@ class RecommendedAdapter(items: ArrayList<Contact>, navigation: NavigationInterf
         holder.onBindView(_items[position])
         holder.itemView.setOnClickListener {
             _viewModel.selectedContact = _items[position]
-            _viewModel.profileMode = ProfileFragment.MODE_RECOMMENDED
             _navigation.openSecondaryFragment(ProfileFragment())
         }
     }

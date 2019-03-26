@@ -10,6 +10,7 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.nimolee.addressbooksample.R
+import com.nimolee.addressbooksample.data.wrappers.Contact
 import com.nimolee.addressbooksample.ui.MainActivity.Companion.FRAGMENT_SAVED
 import com.nimolee.addressbooksample.ui.MainFragment
 import com.nimolee.addressbooksample.ui.MainViewModel
@@ -17,10 +18,6 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class ProfileFragment : MainFragment() {
-    companion object {
-        const val MODE_SAVED = 0
-        const val MODE_RECOMMENDED = 1
-    }
 
     private val _viewModel: MainViewModel by sharedViewModel()
 
@@ -30,9 +27,16 @@ class ProfileFragment : MainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _viewModel.bottomBarVisibilityLiveData.postValue(false)
         val contact = _viewModel.selectedContact ?: return
-        val mode = _viewModel.profileMode ?: return
+        mainSetup(contact)
+        when (contact.id) {
+            null -> setupRecommended(contact)
+            else -> setupSaved(contact)
+        }
+    }
+
+    private fun mainSetup(contact: Contact) {
+        _viewModel.bottomBarVisibilityLiveData.postValue(false)
         profile_back.setOnClickListener { navigation.back() }
         profile_avatar.setImageBitmap(contact.photo)
         profile_name.editText?.setText(contact.name)
@@ -61,40 +65,40 @@ class ProfileFragment : MainFragment() {
             )
             startActivity(Intent.createChooser(emailIntent, "Send email..."))
         }
-        when (mode) {
-            MODE_SAVED -> {
-                profile_special.setImageResource(R.drawable.ic_delete_white_24dp)
-                profile_special.setOnClickListener {
-                    AlertDialog.Builder(it.context)
-                        .setTitle("Are you sure?")
-                        .setMessage("This action can't be undone.")
-                        .setPositiveButton("Yes") { _, _ ->
-                            _viewModel.removeContact(contact)
-                            navigation.openMainFragment(FRAGMENT_SAVED)
-                        }
-                        .setNegativeButton("No", null)
-                        .show()
-                }
-                profile_edit_mode.setOnClickListener {
+    }
 
-                }
-            }
-            MODE_RECOMMENDED -> {
-                profile_special.setImageResource(R.drawable.ic_person_add_white_24dp)
-                profile_special.setOnClickListener {
-                    _viewModel.saveContact(contact)
+    private fun setupSaved(contact: Contact) {
+        profile_special.setImageResource(R.drawable.ic_delete_white_24dp)
+        profile_special.setOnClickListener {
+            AlertDialog.Builder(it.context)
+                .setTitle("Are you sure?")
+                .setMessage("This action can't be undone.")
+                .setPositiveButton("Yes") { _, _ ->
+                    _viewModel.removeContact(contact)
                     navigation.openMainFragment(FRAGMENT_SAVED)
                 }
-                profile_edit_mode.visibility = View.GONE
-                profile_name.isEnabled = false
-                profile_surname.isEnabled = false
-                profile_gender.isEnabled = false
-                profile_birthday_clicker.isEnabled = false
-                profile_birthday.isEnabled = false
-                profile_phone.isEnabled = false
-                profile_email.isEnabled = false
-            }
+                .setNegativeButton("No", null)
+                .show()
         }
+        profile_edit_mode.setOnClickListener {
+
+        }
+    }
+
+    private fun setupRecommended(contact: Contact) {
+        profile_special.setImageResource(R.drawable.ic_person_add_white_24dp)
+        profile_special.setOnClickListener {
+            _viewModel.saveContact(contact)
+            navigation.openMainFragment(FRAGMENT_SAVED)
+        }
+        profile_edit_mode.visibility = View.GONE
+        profile_name.isEnabled = false
+        profile_surname.isEnabled = false
+        profile_gender.isEnabled = false
+        profile_birthday_clicker.isEnabled = false
+        profile_birthday.isEnabled = false
+        profile_phone.isEnabled = false
+        profile_email.isEnabled = false
     }
 
     private class GenderSpinnerAdapter : BaseAdapter() {

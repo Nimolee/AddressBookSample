@@ -2,6 +2,7 @@ package com.nimolee.addressbooksample.ui.recomended
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.nimolee.addressbooksample.R
 import com.nimolee.addressbooksample.data.wrappers.Contact
 import kotlinx.android.synthetic.main.item_contacts.view.*
 
@@ -23,6 +24,9 @@ class RecommendedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 item_contact_phone.visibility = View.GONE
             }
             item_contact_avatar.setImageBitmap(item.photo)
+            if (item.id != null) {
+                setBackgroundColor(resources.getColor(R.color.colorPrimaryLight))
+            }
         }
     }
 }

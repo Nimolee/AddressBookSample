@@ -3,7 +3,7 @@ package com.nimolee.addressbooksample.data.wrappers
 import android.graphics.Bitmap
 
 data class Contact(
-    val id: Int? = null,
+    var id: Int? = null,
     var name: String,
     var surname: String,
     var gender: Boolean,

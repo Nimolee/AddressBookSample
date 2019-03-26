@@ -12,7 +12,6 @@ class MainViewModel(repository: Repository) : ViewModel() {
     val savedUserLiveData: MutableLiveData<ArrayList<Contact>> = MutableLiveData()
     val bottomBarVisibilityLiveData: MutableLiveData<Boolean> = MutableLiveData()
     var selectedContact: Contact? = null
-    var profileMode: Int? = null
 
     private val _repository = repository
 
@@ -24,8 +23,11 @@ class MainViewModel(repository: Repository) : ViewModel() {
 
     fun saveContact(contact: Contact) {
         GlobalScope.launch {
-            _repository.saveContact(contact)
+            val id = _repository.saveContact(contact)
             getSavedContacts()
+            val randomUsers = randomUserLiveData.value ?: return@launch
+            randomUsers[randomUsers.indexOf(contact)].id = id
+            randomUserLiveData.postValue(randomUsers)
         }
     }
 

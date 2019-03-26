@@ -65,20 +65,20 @@ class Repository(
     }
 
     //Local=============================================================================================================
-    fun saveContact(contact: Contact) {
+    fun saveContact(contact: Contact): Int {
         val stream = ByteArrayOutputStream()
         contact.photo?.compress(Bitmap.CompressFormat.WEBP, 100, stream)
-        _database.contactDao().addContact(
-            ContactEntity(
-                firstName = contact.name,
-                lastName = contact.surname,
-                email = contact.email,
-                phone = contact.phone,
-                sex = contact.gender,
-                birthdayString = contact.birthday.toString(),
-                photo = stream.toByteArray()
-            )
+        val entity = ContactEntity(
+            firstName = contact.name,
+            lastName = contact.surname,
+            email = contact.email,
+            phone = contact.phone,
+            sex = contact.gender,
+            birthdayString = contact.birthday.toString(),
+            photo = stream.toByteArray()
         )
+        _database.contactDao().addContact(entity)
+        return entity.id
     }
 
     fun getSavedContacts(): ArrayList<Contact> {
@@ -108,8 +108,9 @@ class Repository(
     }
 
     fun removeContact(contact: Contact) {
-        if (contact.id != null) {
-            _database.contactDao().removeContact(contact.id)
+        val id = contact.id
+        if (id != null) {
+            _database.contactDao().removeContact(id)
         }
     }
 }

@@ -27,7 +27,6 @@ class SavedAdapter(items: ArrayList<Contact>, navigation: NavigationInterface, v
         holder.onBindView(_items[position])
         holder.itemView.setOnClickListener {
             _viewModel.selectedContact = _items[position]
-            _viewModel.profileMode = ProfileFragment.MODE_SAVED
             _navigation.openSecondaryFragment(ProfileFragment())
         }
     }
