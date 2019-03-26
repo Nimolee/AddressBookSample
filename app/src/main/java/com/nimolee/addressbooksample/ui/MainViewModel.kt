@@ -25,6 +25,7 @@ class MainViewModel(repository: Repository) : ViewModel() {
     fun saveContact(contact: Contact) {
         GlobalScope.launch {
             _repository.saveContact(contact)
+            getSavedContacts()
         }
     }
 

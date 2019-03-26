@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.nimolee.addressbooksample.R
+import com.nimolee.addressbooksample.ui.MainActivity.Companion.FRAGMENT_SAVED
 import com.nimolee.addressbooksample.ui.MainFragment
 import com.nimolee.addressbooksample.ui.MainViewModel
-import com.nimolee.addressbooksample.ui.saved.SavedFragment
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -68,9 +68,16 @@ class ProfileFragment : MainFragment() {
                 profile_special.setImageResource(R.drawable.ic_person_add_white_24dp)
                 profile_special.setOnClickListener {
                     _viewModel.saveContact(contact)
-                    navigation.openFragment(SavedFragment())
+                    navigation.openMainFragment(FRAGMENT_SAVED)
                 }
                 profile_edit_mode.visibility = View.GONE
+                profile_name.isEnabled = false
+                profile_surname.isEnabled = false
+                profile_gender.isEnabled = false
+                profile_birthday_clicker.isEnabled = false
+                profile_birthday.isEnabled = false
+                profile_phone.isEnabled = false
+                profile_email.isEnabled = false
             }
         }
     }

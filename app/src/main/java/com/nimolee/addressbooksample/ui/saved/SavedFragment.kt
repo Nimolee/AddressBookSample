@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.nimolee.addressbooksample.R
+import com.nimolee.addressbooksample.ui.MainFragment
 import com.nimolee.addressbooksample.ui.MainViewModel
+import kotlinx.android.synthetic.main.fragment_saved.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
-class SavedFragment : Fragment() {
+class SavedFragment : MainFragment() {
     private val _viewModel: MainViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -21,7 +22,10 @@ class SavedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _viewModel.bottomBarVisibilityLiveData.postValue(true)
         _viewModel.savedUserLiveData.observe(this, Observer {
+            saved_recycler.adapter = SavedAdapter(it, navigation, _viewModel)
         })
-        _viewModel.getSavedContacts()
+        if (_viewModel.savedUserLiveData.value == null) {
+            _viewModel.getSavedContacts()
+        }
     }
 }

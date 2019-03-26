@@ -24,11 +24,13 @@ class RecommendedFragment : MainFragment() {
         recommended_refresh.setOnRefreshListener {
             _viewModel.getRandomUsers()
         }
-        recommended_refresh.isRefreshing = true
         _viewModel.randomUserLiveData.observe(this, Observer {
             recommended_refresh.isRefreshing = false
             recommended_recycler.adapter = RecommendedAdapter(it, navigation, _viewModel)
         })
-        _viewModel.getRandomUsers()
+        if (_viewModel.randomUserLiveData.value == null) {
+            recommended_refresh.isRefreshing = true
+            _viewModel.getRandomUsers()
+        }
     }
 }

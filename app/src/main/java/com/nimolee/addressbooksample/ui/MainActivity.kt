@@ -15,6 +15,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : FragmentActivity(), NavigationInterface {
+    companion object {
+        const val FRAGMENT_SAVED = 0
+        const val FRAGMENT_RECOMMENDED = 1
+        const val FRAGMENT_SETTINGS = 2
+    }
+
+
     private val _viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,14 +50,32 @@ class MainActivity : FragmentActivity(), NavigationInterface {
         }
     }
 
-    override fun openFragment(fragment: Fragment) {
+    private fun openFragment(fragment: Fragment) {
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_fragment_container, fragment)
             .commit()
     }
 
-    override fun openFragmentWithBackstack(fragment: Fragment) {
+    override fun openMainFragment(fragmentId: Int) {
+        when (fragmentId) {
+            FRAGMENT_SAVED -> {
+                if (main_bottom_navigation.selectedItemId != R.id.main_menu_saved_contacts)
+                    main_bottom_navigation.selectedItemId = R.id.main_menu_saved_contacts
+            }
+            FRAGMENT_RECOMMENDED -> {
+                if (main_bottom_navigation.selectedItemId != R.id.main_menu_recommended_contacts)
+                    main_bottom_navigation.selectedItemId = R.id.main_menu_recommended_contacts
+            }
+            FRAGMENT_SETTINGS -> {
+                if (main_bottom_navigation.selectedItemId != R.id.main_menu_settings)
+                    main_bottom_navigation.selectedItemId = R.id.main_menu_settings
+            }
+            else -> error("Unknown fragmentId = $fragmentId")
+        }
+    }
+
+    override fun openSecondaryFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_fragment_container, fragment)
             .addToBackStack(null)
