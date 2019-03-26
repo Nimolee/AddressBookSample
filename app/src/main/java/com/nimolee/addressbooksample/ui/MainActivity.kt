@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import com.nimolee.addressbooksample.R
+import com.nimolee.addressbooksample.ui.profile.ProfileFragment
 import com.nimolee.addressbooksample.ui.recomended.RecommendedFragment
 import com.nimolee.addressbooksample.ui.saved.SavedFragment
 import com.nimolee.addressbooksample.ui.settings.SettingsFragment
@@ -16,14 +17,12 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : FragmentActivity(), NavigationInterface {
     companion object {
-        const val FRAGMENT_SAVED = 0
-        const val FRAGMENT_RECOMMENDED = 1
-        const val FRAGMENT_SETTINGS = 2
+        private const val BOTTOM_SELECTED_ID = "bottom_selected_id"
     }
-
 
     private val _viewModel: MainViewModel by viewModel()
 
+    //Lifecycle methods=================================================================================================
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,7 +37,7 @@ class MainActivity : FragmentActivity(), NavigationInterface {
         _viewModel.bottomBarVisibilityLiveData.observe(this, Observer {
             main_bottom_navigation.visibility = if (it) View.VISIBLE else View.GONE
         })
-        openMainFragment(FRAGMENT_SAVED)
+        main_bottom_navigation.selectedItemId = R.id.main_menu_saved_contacts
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -51,28 +50,22 @@ class MainActivity : FragmentActivity(), NavigationInterface {
         }
     }
 
-    private fun openFragment(fragment: Fragment) {
-        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_fragment_container, fragment)
-            .commit()
+    override fun onSaveInstanceState(outState: Bundle?) {
+        val itemId = main_bottom_navigation.selectedItemId
+        outState?.putInt(BOTTOM_SELECTED_ID, itemId)
+        super.onSaveInstanceState(outState)
     }
 
-    override fun openMainFragment(fragmentId: Int) {
-        when (fragmentId) {
-            FRAGMENT_SAVED -> {
-                main_bottom_navigation.selectedItemId = R.id.main_menu_saved_contacts
-            }
-            FRAGMENT_RECOMMENDED -> {
-                main_bottom_navigation.selectedItemId = R.id.main_menu_recommended_contacts
-            }
-            FRAGMENT_SETTINGS -> {
-                main_bottom_navigation.selectedItemId = R.id.main_menu_settings
-            }
-            else -> error("Unknown fragmentId = $fragmentId")
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        main_bottom_navigation.selectedItemId =
+            savedInstanceState?.getInt(BOTTOM_SELECTED_ID) ?: R.id.main_menu_saved_contacts
+        if (_viewModel.selectedContact != null) {
+            openSecondaryFragment(ProfileFragment())
         }
+        super.onRestoreInstanceState(savedInstanceState)
     }
 
+    //NavigationInterface implementation================================================================================
     override fun openSecondaryFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_fragment_container, fragment)
@@ -83,4 +76,14 @@ class MainActivity : FragmentActivity(), NavigationInterface {
     override fun back() {
         supportFragmentManager.popBackStack()
     }
+
+    //Local methods=====================================================================================================
+    private fun openFragment(fragment: Fragment) {
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_fragment_container, fragment)
+            .commit()
+    }
+
+
 }

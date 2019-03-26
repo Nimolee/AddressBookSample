@@ -14,7 +14,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.nimolee.addressbooksample.R
 import com.nimolee.addressbooksample.data.wrappers.Contact
 import com.nimolee.addressbooksample.data.wrappers.Date
-import com.nimolee.addressbooksample.ui.MainActivity.Companion.FRAGMENT_SAVED
 import com.nimolee.addressbooksample.ui.MainFragment
 import com.nimolee.addressbooksample.ui.MainViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -40,7 +39,6 @@ class ProfileFragment : MainFragment() {
 
     private fun mainSetup(contact: Contact) {
         _viewModel.bottomBarVisibilityLiveData.postValue(false)
-        profile_back.setOnClickListener { navigation.back() }
         profile_avatar.setImageBitmap(contact.photo)
         profile_name.editText?.setText(contact.name)
         profile_surname.editText?.setText(contact.surname)
@@ -49,6 +47,10 @@ class ProfileFragment : MainFragment() {
         profile_gender.adapter = GenderSpinnerAdapter()
         profile_gender.setSelection(if (contact.gender) 0 else 1)
         profile_birthday.editText?.setText(contact.birthday.toString())
+        profile_back.setOnClickListener {
+            _viewModel.selectedContact = null
+            navigation.back()
+        }
         profile_birthday_clicker.setOnClickListener {
             DatePickerDialog(contact.birthday) {
                 contact.birthday = it
@@ -78,7 +80,8 @@ class ProfileFragment : MainFragment() {
                 .setMessage("This action can't be undone.")
                 .setPositiveButton("Yes") { _, _ ->
                     _viewModel.removeContact(contact)
-                    navigation.openMainFragment(FRAGMENT_SAVED)
+                    _viewModel.selectedContact = null
+                    navigation.back()
                 }
                 .setNegativeButton("No", null)
                 .show()
@@ -99,7 +102,8 @@ class ProfileFragment : MainFragment() {
                     profile_avatar.drawable.toBitmap()
                 )
                 _viewModel.updateContact(result)
-                navigation.openMainFragment(FRAGMENT_SAVED)
+                _viewModel.selectedContact = null
+                navigation.back()
             } else {
                 Snackbar.make(it, "Please, enter valid name.", Snackbar.LENGTH_LONG).show()
             }
@@ -116,7 +120,8 @@ class ProfileFragment : MainFragment() {
         profile_special.setImageResource(R.drawable.ic_person_add_white_24dp)
         profile_special.setOnClickListener {
             _viewModel.saveContact(contact)
-            navigation.openMainFragment(FRAGMENT_SAVED)
+            _viewModel.selectedContact = null
+            navigation.back()
         }
         profile_edit_mode.visibility = View.GONE
         profile_name.isEnabled = false
