@@ -9,7 +9,7 @@ data class Contact(
     var email: String,
     var phone: String,
     var birthday: Date,
-    var photo: Bitmap
+    var photo: Bitmap?
 )
 
 data class Date(

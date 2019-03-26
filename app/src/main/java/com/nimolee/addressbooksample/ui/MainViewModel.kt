@@ -9,6 +9,8 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(repository: Repository) : ViewModel() {
     val randomUserLiveData: MutableLiveData<ArrayList<Contact>> = MutableLiveData()
+    val savedUserLiveData: MutableLiveData<ArrayList<Contact>> = MutableLiveData()
+    val bottomBarVisibilityLiveData: MutableLiveData<Boolean> = MutableLiveData()
     var selectedContact: Contact? = null
     var profileMode: Int? = null
 
@@ -17,6 +19,18 @@ class MainViewModel(repository: Repository) : ViewModel() {
     fun getRandomUsers() {
         GlobalScope.launch {
             randomUserLiveData.postValue(_repository.getRandomUsersAwait())
+        }
+    }
+
+    fun saveContact(contact: Contact) {
+        GlobalScope.launch {
+            _repository.saveContact(contact)
+        }
+    }
+
+    fun getSavedContacts() {
+        GlobalScope.launch {
+            savedUserLiveData.postValue(_repository.getSavedContacts())
         }
     }
 }

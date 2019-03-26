@@ -11,13 +11,14 @@ import android.widget.TextView
 import com.nimolee.addressbooksample.R
 import com.nimolee.addressbooksample.ui.MainFragment
 import com.nimolee.addressbooksample.ui.MainViewModel
+import com.nimolee.addressbooksample.ui.saved.SavedFragment
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class ProfileFragment : MainFragment() {
     companion object {
         const val MODE_SAVED = 0
-        const val MODE_RECOMENDED = 1
+        const val MODE_RECOMMENDED = 1
     }
 
     private val _viewModel: MainViewModel by sharedViewModel()
@@ -28,6 +29,7 @@ class ProfileFragment : MainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _viewModel.bottomBarVisibilityLiveData.postValue(false)
         val contact = _viewModel.selectedContact ?: return
         val mode = _viewModel.profileMode ?: return
         profile_back.setOnClickListener { navigation.back() }
@@ -60,9 +62,15 @@ class ProfileFragment : MainFragment() {
         }
         when (mode) {
             MODE_SAVED -> {
-                profile_special.setImageResource(R.drawable.ic_person_add_white_24dp)
+                profile_special.setImageResource(R.drawable.ic_delete_white_24dp)
             }
-            MODE_RECOMENDED -> {
+            MODE_RECOMMENDED -> {
+                profile_special.setImageResource(R.drawable.ic_person_add_white_24dp)
+                profile_special.setOnClickListener {
+                    _viewModel.saveContact(contact)
+                    navigation.openFragment(SavedFragment())
+                }
+                profile_edit_mode.visibility = View.GONE
             }
         }
     }

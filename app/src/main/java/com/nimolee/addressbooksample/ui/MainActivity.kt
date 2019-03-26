@@ -2,9 +2,11 @@ package com.nimolee.addressbooksample.ui
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
 import com.nimolee.addressbooksample.R
 import com.nimolee.addressbooksample.ui.recomended.RecommendedFragment
 import com.nimolee.addressbooksample.ui.saved.SavedFragment
@@ -26,6 +28,9 @@ class MainActivity : FragmentActivity(), NavigationInterface {
             }
             true
         }
+        _viewModel.bottomBarVisibilityLiveData.observe(this, Observer {
+            main_bottom_navigation.visibility = if (it) View.VISIBLE else View.GONE
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

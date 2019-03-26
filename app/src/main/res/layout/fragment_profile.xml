@@ -57,7 +57,7 @@
                 android:layout_height="64dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_mode_edit_white_24dp"
+                android:src="@drawable/ic_save_white_24dp"
                 app:layout_constraintEnd_toStartOf="@+id/profile_special"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/profile_send_email"

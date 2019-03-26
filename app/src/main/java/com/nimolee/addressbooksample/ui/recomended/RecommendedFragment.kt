@@ -20,6 +20,7 @@ class RecommendedFragment : MainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _viewModel.bottomBarVisibilityLiveData.postValue(true)
         recommended_refresh.setOnRefreshListener {
             _viewModel.getRandomUsers()
         }
