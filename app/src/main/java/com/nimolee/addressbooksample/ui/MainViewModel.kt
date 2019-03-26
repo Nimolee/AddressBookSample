@@ -29,6 +29,13 @@ class MainViewModel(repository: Repository) : ViewModel() {
         }
     }
 
+    fun removeContact(contact: Contact) {
+        GlobalScope.launch {
+            _repository.removeContact(contact)
+            getSavedContacts()
+        }
+    }
+
     fun getSavedContacts() {
         GlobalScope.launch {
             _repository.getSavedContacts().also { array ->

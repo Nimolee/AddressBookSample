@@ -38,7 +38,7 @@ class MainActivity : FragmentActivity(), NavigationInterface {
         _viewModel.bottomBarVisibilityLiveData.observe(this, Observer {
             main_bottom_navigation.visibility = if (it) View.VISIBLE else View.GONE
         })
-        openFragment(SavedFragment())
+        openMainFragment(FRAGMENT_SAVED)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -61,16 +61,13 @@ class MainActivity : FragmentActivity(), NavigationInterface {
     override fun openMainFragment(fragmentId: Int) {
         when (fragmentId) {
             FRAGMENT_SAVED -> {
-                if (main_bottom_navigation.selectedItemId != R.id.main_menu_saved_contacts)
-                    main_bottom_navigation.selectedItemId = R.id.main_menu_saved_contacts
+                main_bottom_navigation.selectedItemId = R.id.main_menu_saved_contacts
             }
             FRAGMENT_RECOMMENDED -> {
-                if (main_bottom_navigation.selectedItemId != R.id.main_menu_recommended_contacts)
-                    main_bottom_navigation.selectedItemId = R.id.main_menu_recommended_contacts
+                main_bottom_navigation.selectedItemId = R.id.main_menu_recommended_contacts
             }
             FRAGMENT_SETTINGS -> {
-                if (main_bottom_navigation.selectedItemId != R.id.main_menu_settings)
-                    main_bottom_navigation.selectedItemId = R.id.main_menu_settings
+                main_bottom_navigation.selectedItemId = R.id.main_menu_settings
             }
             else -> error("Unknown fragmentId = $fragmentId")
         }

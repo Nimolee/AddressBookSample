@@ -93,6 +93,7 @@ class Repository(
             val dateRes = datePattern.find(it.birthdayString) ?: error(it.birthdayString)
             contactsWrapped.add(
                 Contact(
+                    id = it.id,
                     name = it.firstName,
                     surname = it.lastName,
                     gender = it.sex,
@@ -104,5 +105,11 @@ class Repository(
             )
         }
         return contactsWrapped
+    }
+
+    fun removeContact(contact: Contact) {
+        if (contact.id != null) {
+            _database.contactDao().removeContact(contact.id)
+        }
     }
 }

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import com.nimolee.addressbooksample.R
 import com.nimolee.addressbooksample.ui.MainActivity.Companion.FRAGMENT_SAVED
 import com.nimolee.addressbooksample.ui.MainFragment
@@ -63,6 +64,20 @@ class ProfileFragment : MainFragment() {
         when (mode) {
             MODE_SAVED -> {
                 profile_special.setImageResource(R.drawable.ic_delete_white_24dp)
+                profile_special.setOnClickListener {
+                    AlertDialog.Builder(it.context)
+                        .setTitle("Are you sure?")
+                        .setMessage("This action can't be undone.")
+                        .setPositiveButton("Yes") { _, _ ->
+                            _viewModel.removeContact(contact)
+                            navigation.openMainFragment(FRAGMENT_SAVED)
+                        }
+                        .setNegativeButton("No", null)
+                        .show()
+                }
+                profile_edit_mode.setOnClickListener {
+
+                }
             }
             MODE_RECOMMENDED -> {
                 profile_special.setImageResource(R.drawable.ic_person_add_white_24dp)
