@@ -139,7 +139,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/profile_gender"
                 app:layout_constraintTop_toBottomOf="@id/profile_surname"
-                app:layout_goneMarginStart="4dp">
+                app:layout_goneMarginStart="4dp"
+                android:paddingBottom="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -213,14 +214,15 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <ImageView
+                android:background="@color/colorPrimary"
                 android:id="@+id/profile_avatar"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:src="@drawable/default_user_image"
                 android:contentDescription="@null"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"
-                tools:src="@tools:sample/avatars" />
+                app:layout_collapseMode="parallax"/>
 
 
             <ImageButton

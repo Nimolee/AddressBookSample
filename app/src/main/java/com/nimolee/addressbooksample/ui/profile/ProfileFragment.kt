@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.nimolee.addressbooksample.R
 import com.nimolee.addressbooksample.data.wrappers.Contact
 import com.nimolee.addressbooksample.data.wrappers.Date
+import com.nimolee.addressbooksample.ui.MainActivity.Companion.FAB_HIDED_MODE
 import com.nimolee.addressbooksample.ui.MainFragment
 import com.nimolee.addressbooksample.ui.MainViewModel
 import com.theartofdev.edmodo.cropper.CropImage
@@ -36,8 +37,10 @@ class ProfileFragment : MainFragment() {
         mainSetup(contact)
         when (contact.id) {
             null -> setupRecommended(contact)
+            0 -> setupNew(contact)
             else -> setupSaved(contact)
         }
+        _viewModel.fabExtendLiveData.postValue(FAB_HIDED_MODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -50,7 +53,9 @@ class ProfileFragment : MainFragment() {
 
     private fun mainSetup(contact: Contact) {
         _viewModel.bottomBarVisibilityLiveData.postValue(false)
-        profile_avatar.setImageBitmap(contact.photo)
+        if (contact.photo != null) {
+            profile_avatar.setImageBitmap(contact.photo)
+        }
         profile_name.editText?.setText(contact.name)
         profile_surname.editText?.setText(contact.surname)
         profile_email.editText?.setText(contact.email)
@@ -106,33 +111,19 @@ class ProfileFragment : MainFragment() {
                 .show()
         }
         profile_edit_mode.setOnClickListener {
-            if (validateFields()) {
-                val datePattern = Regex("(.+)-(.+)-(.+)")
-                val dateRes = datePattern.find(profile_birthday.editText?.text.toString())
-                    ?: error(profile_birthday.editText?.text.toString())
-                val result = Contact(
-                    contact.id,
-                    profile_name.editText?.text.toString(),
-                    profile_surname.editText?.text.toString(),
-                    profile_gender.selectedItemPosition == 0,
-                    profile_email.editText?.text.toString(),
-                    profile_phone.editText?.text.toString(),
-                    Date(dateRes.groupValues[1], dateRes.groupValues[2], dateRes.groupValues[3]),
-                    profile_avatar.drawable.toBitmap()
-                )
-                _viewModel.updateContact(result)
-                _viewModel.selectedContact = null
-                navigation.back()
-            } else {
-                Snackbar.make(it, "Please, enter valid name.", Snackbar.LENGTH_LONG).show()
-            }
+            saveContact(contact, it)
         }
     }
 
-    private fun validateFields(): Boolean {
+    private fun validateFields(view: View): Boolean {
+        var result = true
         val name = profile_name.editText?.text.toString()
         val surname = profile_surname.editText?.text.toString()
-        return name.isNotBlank() || surname.isNotBlank()
+        if (name.isBlank() && surname.isBlank()) {
+            Snackbar.make(view, "Please, enter valid name.", Snackbar.LENGTH_LONG).show()
+            result = false
+        }
+        return result
     }
 
     private fun setupRecommended(contact: Contact) {
@@ -151,6 +142,40 @@ class ProfileFragment : MainFragment() {
         profile_phone.isEnabled = false
         profile_email.isEnabled = false
         profile_camera.isEnabled = false
+    }
+
+    private fun setupNew(contact: Contact) {
+        profile_make_call.visibility = View.GONE
+        profile_send_email.visibility = View.GONE
+        profile_edit_mode.visibility = View.GONE
+        profile_special.setOnClickListener {
+            saveContact(contact, it)
+        }
+    }
+
+    private fun saveContact(contact: Contact, view: View) {
+        if (validateFields(view)) {
+            val datePattern = Regex("(.+)-(.+)-(.+)")
+            val dateRes = datePattern.find(profile_birthday.editText?.text.toString())
+                ?: error(profile_birthday.editText?.text.toString())
+            val result = Contact(
+                contact.id,
+                profile_name.editText?.text.toString(),
+                profile_surname.editText?.text.toString(),
+                profile_gender.selectedItemPosition == 0,
+                profile_email.editText?.text.toString(),
+                profile_phone.editText?.text.toString(),
+                Date(dateRes.groupValues[1], dateRes.groupValues[2], dateRes.groupValues[3]),
+                profile_avatar.drawable.toBitmap()
+            )
+            if (result.id != 0) {
+                _viewModel.updateContact(result)
+            } else {
+                _viewModel.saveContact(result)
+            }
+            _viewModel.selectedContact = null
+            navigation.back()
+        }
     }
 
     private class GenderSpinnerAdapter : BaseAdapter() {

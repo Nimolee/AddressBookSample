@@ -13,6 +13,7 @@
         <ImageView
             android:id="@+id/item_contact_avatar"
             android:layout_width="100dp"
+            android:background="@color/colorPrimary"
             android:layout_height="100dp"
             android:contentDescription="@null"
             app:layout_constraintStart_toStartOf="parent"

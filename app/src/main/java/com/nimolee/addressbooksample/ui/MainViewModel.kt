@@ -11,6 +11,7 @@ class MainViewModel(repository: Repository) : ViewModel() {
     val randomUserLiveData: MutableLiveData<ArrayList<Contact>> = MutableLiveData()
     val savedUserLiveData: MutableLiveData<ArrayList<Contact>> = MutableLiveData()
     val bottomBarVisibilityLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    val fabExtendLiveData: MutableLiveData<Int> = MutableLiveData()
     var selectedContact: Contact? = null
 
     private val _repository = repository
@@ -26,8 +27,10 @@ class MainViewModel(repository: Repository) : ViewModel() {
             val id = _repository.saveContact(contact)
             getSavedContacts()
             val randomUsers = randomUserLiveData.value ?: return@launch
-            randomUsers[randomUsers.indexOf(contact)].id = id
-            randomUserLiveData.postValue(randomUsers)
+            if (randomUsers.contains(contact)) {
+                randomUsers[randomUsers.indexOf(contact)].id = id
+                randomUserLiveData.postValue(randomUsers)
+            }
         }
     }
 

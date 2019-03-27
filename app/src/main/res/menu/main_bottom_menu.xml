@@ -5,18 +5,18 @@
         android:id="@+id/main_menu_saved_contacts"
         android:enabled="true"
         android:icon="@drawable/ic_group_black_24dp"
-        android:title="Saved contacts"
+        android:title="@string/main_menu_saved"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/main_menu_recommended_contacts"
         android:enabled="true"
         android:icon="@drawable/ic_group_add_black_24dp"
-        android:title="Recommended contacts"
+        android:title="@string/main_menu_recommended"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/main_menu_settings"
         android:enabled="true"
         android:icon="@drawable/ic_settings_black_24dp"
-        android:title="Settings"
+        android:title="@string/main_menu_settings"
         app:showAsAction="ifRoom" />
 </menu>
