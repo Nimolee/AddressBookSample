@@ -2,7 +2,6 @@ package com.nimolee.addressbooksample.tools.worker
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.nimolee.addressbooksample.data.Repository
@@ -23,8 +22,6 @@ class NotificationWorker(
             showNotification(fact.source, fact.text)
             Result.success()
         } catch (exception: Exception) {
-            Log.i("NotificationWorker", "Error")
-            exception.printStackTrace()
             Result.failure()
         }
     }

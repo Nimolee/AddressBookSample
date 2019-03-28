@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.nimolee.addressbooksample.R
 import com.nimolee.addressbooksample.ui.MainActivity
 import com.nimolee.addressbooksample.ui.MainFragment
@@ -42,6 +43,13 @@ class RecommendedFragment : MainFragment() {
                     _viewModel.fabExtendLiveData.postValue(MainActivity.FAB_EXTENDED_MODE)
                 }
                 super.onScrolled(recyclerView, dx, dy)
+            }
+        })
+        _viewModel.noInternetLiveData.observe(this, Observer {
+            if (it) {
+                recommended_refresh.isRefreshing = false
+                Snackbar.make(recommended_refresh, "No internet access.", Snackbar.LENGTH_LONG).show()
+                _viewModel.noInternetLiveData.postValue(false)
             }
         })
     }

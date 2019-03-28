@@ -12,13 +12,18 @@ class MainViewModel(repository: Repository) : ViewModel() {
     val savedUserLiveData: MutableLiveData<ArrayList<Contact>> = MutableLiveData()
     val bottomBarVisibilityLiveData: MutableLiveData<Boolean> = MutableLiveData()
     val fabExtendLiveData: MutableLiveData<Int> = MutableLiveData()
+    val noInternetLiveData: MutableLiveData<Boolean> = MutableLiveData()
     var selectedContact: Contact? = null
 
     private val _repository = repository
 
     fun getRandomUsers() {
         GlobalScope.launch {
-            randomUserLiveData.postValue(_repository.getRandomUsersAwait())
+            try {
+                randomUserLiveData.postValue(_repository.getRandomUsersAwait())
+            } catch (e: Exception) {
+                noInternetLiveData.postValue(true)
+            }
         }
     }
 
