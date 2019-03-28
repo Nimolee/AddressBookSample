@@ -23,7 +23,7 @@ internal class OreoNotificationHelper(ctx: Context) : ContextWrapper(ctx) {
     init {
         val channel = NotificationChannel(
             PRIMARY_CHANNEL,
-            "Random fact", NotificationManager.IMPORTANCE_LOW
+            "Random fact", NotificationManager.IMPORTANCE_MIN
         )
         channel.lightColor = Color.GREEN
         channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
