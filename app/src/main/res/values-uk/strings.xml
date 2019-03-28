@@ -26,4 +26,5 @@
     <string name="settings_recommended_count">Кількість рекомендацій</string>
     <string name="settings_show_notification">Показувати сповіщення</string>
     <string name="settings_system">Система</string>
+    <string name="saved_no_contacts_saved_yet">Ще не збережено жодного контакту</string>
 </resources>

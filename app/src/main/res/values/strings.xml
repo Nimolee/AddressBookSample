@@ -17,7 +17,7 @@
     <string name="profile_valid_name">Please, enter valid name.</string>
     <string name="gender_male">Male</string>
     <string name="gender_female">Female</string>
-    <string name="settings_notification_delay_summary">Notification will shown every</string>
+    <string name="settings_notification_delay_summary">Notification will shown every </string>
     <string name="settings_time_utils"> min.</string>
     <string name="settings_recommended_count_summary"> users.</string>
     <string name="settings_recommended_count">Recommended count</string>
@@ -26,4 +26,5 @@
     <string name="settings_notification_delay">Notification delay</string>
     <string name="settings_language">Language</string>
     <string name="settings_system">System</string>
+    <string name="saved_no_contacts_saved_yet">No contacts saved yet</string>
 </resources>

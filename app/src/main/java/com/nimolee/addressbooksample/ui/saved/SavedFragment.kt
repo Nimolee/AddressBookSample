@@ -25,7 +25,16 @@ class SavedFragment : MainFragment() {
         super.onViewCreated(view, savedInstanceState)
         _viewModel.bottomBarVisibilityLiveData.postValue(true)
         _viewModel.savedUserLiveData.observe(this, Observer {
-            saved_recycler.adapter = SavedAdapter(it, navigation, _viewModel)
+            if (it.isNotEmpty()) {
+                saved_recycler.visibility = View.VISIBLE
+                saved_placeholder_image.visibility = View.GONE
+                saved_placeholder_text.visibility = View.GONE
+                saved_recycler.adapter = SavedAdapter(it, navigation, _viewModel)
+            } else {
+                saved_recycler.visibility = View.GONE
+                saved_placeholder_image.visibility = View.VISIBLE
+                saved_placeholder_text.visibility = View.VISIBLE
+            }
         })
         if (_viewModel.savedUserLiveData.value == null) {
             _viewModel.getSavedContacts()
