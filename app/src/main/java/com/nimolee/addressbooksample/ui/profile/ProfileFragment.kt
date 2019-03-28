@@ -1,6 +1,7 @@
 package com.nimolee.addressbooksample.ui.profile
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -60,7 +61,7 @@ class ProfileFragment : MainFragment() {
         profile_surname.editText?.setText(contact.surname)
         profile_email.editText?.setText(contact.email)
         profile_phone.editText?.setText(contact.phone)
-        profile_gender.adapter = GenderSpinnerAdapter()
+        profile_gender.adapter = GenderSpinnerAdapter(requireContext())
         profile_gender.setSelection(if (contact.gender) 0 else 1)
         profile_birthday.editText?.setText(contact.birthday.toString())
         profile_back.setOnClickListener {
@@ -100,14 +101,14 @@ class ProfileFragment : MainFragment() {
         profile_special.setImageResource(R.drawable.ic_delete_white_24dp)
         profile_special.setOnClickListener {
             AlertDialog.Builder(it.context)
-                .setTitle("Are you sure?")
-                .setMessage("This action can't be undone.")
-                .setPositiveButton("Yes") { _, _ ->
+                .setTitle(getString(R.string.dialog_delete_title))
+                .setMessage(getString(R.string.dialog_delete_message))
+                .setPositiveButton(getString(R.string.dialog_delete)) { _, _ ->
                     _viewModel.removeContact(contact)
                     _viewModel.selectedContact = null
                     navigation.back()
                 }
-                .setNegativeButton("No", null)
+                .setNegativeButton(getString(R.string.dialog_cancel), null)
                 .show()
         }
         profile_edit_mode.setOnClickListener {
@@ -120,7 +121,7 @@ class ProfileFragment : MainFragment() {
         val name = profile_name.editText?.text.toString()
         val surname = profile_surname.editText?.text.toString()
         if (name.isBlank() && surname.isBlank()) {
-            Snackbar.make(view, "Please, enter valid name.", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(view, getString(R.string.profile_valid_name), Snackbar.LENGTH_LONG).show()
             result = false
         }
         return result
@@ -193,8 +194,9 @@ class ProfileFragment : MainFragment() {
         super.onSaveInstanceState(outState)
     }
 
-    private class GenderSpinnerAdapter : BaseAdapter() {
-        private val _genders = arrayOf("Male", "Female")
+    private class GenderSpinnerAdapter(context: Context) : BaseAdapter() {
+        private val _genders =
+            arrayOf(context.getString(R.string.gender_male), context.getString(R.string.gender_female))
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             var newConvertView = convertView

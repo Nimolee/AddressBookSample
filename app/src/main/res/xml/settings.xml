@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/main_menu_recommended">
+        <ListPreference
+            android:entries="@array/recommended_count"
+            android:entryValues="@array/recommended_count"
+            android:key="preference_recommended_count"
+            android:title="@string/settings_recommended_count"
+            app:defaultValue="10" />
+    </PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory android:title="@string/settings_notification">
+        <androidx.preference.SwitchPreference
+            android:defaultValue="true"
+            android:key="preference_notification"
+            android:title="@string/settings_show_notification" />
+
+        <ListPreference
+            android:key="preference_notification_delay"
+            android:title="@string/settings_notification_delay"
+            app:defaultValue="15"
+            app:entries="@array/notification_delays"
+            app:entryValues="@array/notification_delay_values" />
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory android:title="@string/settings_system">
+        <ListPreference
+            android:entries="@array/languages"
+            android:entryValues="@array/languages_alias"
+            android:key="preference_language"
+            android:title="@string/settings_language"
+            app:defaultValue="en" />
+    </androidx.preference.PreferenceCategory>
+
+
+</androidx.preference.PreferenceScreen>

@@ -16,7 +16,25 @@ class ContactsSharedPreferences(applicationContext: Context) {
         }
     }
 
-    private fun getString(key: String): String? = _prefs.getString(key, null)
+    private fun getString(key: String, defValue: String): String = _prefs.getString(key, defValue)
 
-    private fun getBoolean(key: String): Boolean = _prefs.getBoolean(key, false)
+    private fun getBoolean(key: String, defValue: Boolean): Boolean = _prefs.getBoolean(key, defValue)
+
+    private fun getInt(key: String, defValue: Int): Int = _prefs.getInt(key, defValue)
+
+    var isNotificationEnabled: Boolean
+        get() = getBoolean("preference_notification", true)
+        set(value) = save("preference_notification", value)
+
+    var notificationDelay: String
+        get() = getString("preference_notification_delay", "15")
+        set(value) = save("preference_notification_delay", value)
+
+    var recommendedCount: String
+        get() = getString("preference_recommended_count", "10")
+        set(value) = save("preference_notification_delay", value)
+
+    val language: String
+        get() = getString("preference_language", "en")
+
 }

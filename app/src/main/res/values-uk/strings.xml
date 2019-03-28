@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fragment_profile_name">Ім\'я:</string>
+    <string name="fragment_profile_surname">Прізвище:</string>
+    <string name="fragment_profile_phone">Телефон:</string>
+    <string name="fragment_profile_e_mail">E-mail:</string>
+    <string name="fragment_profile_birthday">Дата народження:</string>
+    <string name="main_button_create">Додати</string>
+    <string name="main_menu_saved">Збережені</string>
+    <string name="main_menu_recommended">Рекомендації</string>
+    <string name="main_menu_settings">Налаштування</string>
+    <string name="dialog_cancel">Відмінити</string>
+    <string name="dialog_delete">Видалити</string>
+    <string name="dialog_delete_message">Цю дію неможливо відмінити.</string>
+    <string name="dialog_delete_title">Видалити контакт?</string>
+    <string name="dialog_ok">Підтвердити</string>
+    <string name="gender_female">Жінка</string>
+    <string name="gender_male">Чоловік</string>
+    <string name="profile_valid_name">Будь-ласка, вкажіть ім\'я.</string>
+    <string name="settings_notification_delay_summary">Сповіщення показуються кожні </string>
+    <string name="settings_recommended_count_summary"> користувачі.</string>
+    <string name="settings_time_utils"> хвилин.</string>
+    <string name="settings_language">Мова</string>
+    <string name="settings_notification">Сповіщення</string>
+    <string name="settings_notification_delay">Затримка сповіщень</string>
+    <string name="settings_recommended_count">Кількість рекомендацій</string>
+    <string name="settings_show_notification">Показувати сповіщення</string>
+    <string name="settings_system">Система</string>
+</resources>

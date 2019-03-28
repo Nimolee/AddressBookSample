@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="notification_delay_values">
+        <item>15</item>
+        <item>30</item>
+        <item>45</item>
+        <item>60</item>
+    </string-array>
+
+    <string-array name="notification_delays">
+        <item>15 min</item>
+        <item>30 min</item>
+        <item>45 min</item>
+        <item>60 min</item>
+    </string-array>
+
+    <string-array name="recommended_count">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+    </string-array>
+
+    <string-array name="languages">
+        <item>English</item>
+        <item>Ukrainian</item>
+    </string-array>
+
+    <string-array name="languages_alias">
+        <item>en</item>
+        <item>uk</item>
+    </string-array>
+</resources>

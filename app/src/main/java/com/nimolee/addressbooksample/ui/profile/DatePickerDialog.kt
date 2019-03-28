@@ -19,13 +19,13 @@ class DatePickerDialog(date: Date, callback: (date: Date) -> Unit) : DialogFragm
         view.init(_date.year.toInt(), _date.month.toInt(), _date.day.toInt(), null)
         return AlertDialog.Builder(requireContext())
             .setView(view)
-            .setPositiveButton("Ok") { _, _ ->
+            .setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
                 val year = "${view.year}"
                 val month = if (view.month < 10) "0${view.month}" else "${view.month}"
                 val day = if (view.dayOfMonth < 10) "0${view.dayOfMonth}" else "${view.dayOfMonth}"
                 _callback.invoke(Date(year, month, day))
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(getString(R.string.dialog_cancel), null)
             .create()
     }
 }

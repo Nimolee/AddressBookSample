@@ -58,4 +58,15 @@ class MainViewModel(repository: Repository) : ViewModel() {
             getSavedContacts()
         }
     }
+
+    val isNotificationEnabled: Boolean
+        get() = _repository.isNotificationEnabled
+
+    val notificationDelay: String
+        get() = _repository.notificationDelay
+
+    val recommendedCount: String
+        get() = _repository.recommendedCount
+    val language: String
+        get() = _repository.language
 }

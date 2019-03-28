@@ -1,5 +1,6 @@
 package com.nimolee.addressbooksample.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import com.nimolee.addressbooksample.R
+import com.nimolee.addressbooksample.data.local.ContactsSharedPreferences
 import com.nimolee.addressbooksample.data.wrappers.Contact
 import com.nimolee.addressbooksample.data.wrappers.Date
 import com.nimolee.addressbooksample.ui.profile.ProfileFragment
@@ -29,6 +31,16 @@ class MainActivity : FragmentActivity(), NavigationInterface {
     }
 
     private val _viewModel: MainViewModel by viewModel()
+
+    override fun attachBaseContext(newBase: Context?) {
+        val context = newBase ?: return
+        val locale = Locale(ContactsSharedPreferences(context).language)
+        Locale.setDefault(locale)
+        val res = context.resources
+        val config = res.configuration
+        config.setLocale(locale)
+        super.attachBaseContext(context.createConfigurationContext(config))
+    }
 
     //Lifecycle methods=================================================================================================
     override fun onCreate(savedInstanceState: Bundle?) {

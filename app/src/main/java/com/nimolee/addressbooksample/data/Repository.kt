@@ -30,7 +30,7 @@ class Repository(
     //Network===========================================================================================================
     fun getRandomUsersAwait(): ArrayList<Contact> {
         val users = runBlocking {
-            _usersRetrofit.getUsersAsync().await()
+            _usersRetrofit.getUsersAsync(_preferences.recommendedCount).await()
         }
         val usersWrapped = arrayListOf<Contact>()
         val datePattern = Regex("(.+)-(.+)-(.+)T")
@@ -130,4 +130,17 @@ class Repository(
         )
         _database.contactDao().updateContact(entity)
     }
+
+    //Preferences=======================================================================================================
+    val isNotificationEnabled: Boolean
+        get() = _preferences.isNotificationEnabled
+
+    val notificationDelay: String
+        get() = _preferences.notificationDelay
+
+    val recommendedCount: String
+        get() = _preferences.recommendedCount
+
+    val language: String
+        get() = _preferences.language
 }
