@@ -89,7 +89,10 @@ class MainActivity : FragmentActivity(), NavigationInterface {
             openSecondaryFragment(ProfileFragment())
         }
         main_bottom_navigation.selectedItemId = R.id.main_menu_saved_contacts
-        val worker = PeriodicWorkRequestBuilder<NotificationWorker>(15, TimeUnit.MINUTES).build()
+        val worker = PeriodicWorkRequestBuilder<NotificationWorker>(
+            _viewModel.notificationDelay.toLong(),
+            TimeUnit.MINUTES
+        ).build()
         WorkManager.getInstance()
             .enqueueUniquePeriodicWork("NotificationWorker", ExistingPeriodicWorkPolicy.REPLACE, worker)
     }

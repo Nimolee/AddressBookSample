@@ -8,21 +8,24 @@
             android:entryValues="@array/recommended_count"
             android:key="preference_recommended_count"
             android:title="@string/settings_recommended_count"
-            app:defaultValue="10" />
+            app:defaultValue="10"
+            app:icon="@drawable/ic_group_add_black_24dp" />
     </PreferenceCategory>
 
     <androidx.preference.PreferenceCategory android:title="@string/settings_notification">
         <androidx.preference.SwitchPreference
             android:defaultValue="true"
             android:key="preference_notification"
-            android:title="@string/settings_show_notification" />
+            android:title="@string/settings_show_notification"
+            app:icon="@drawable/ic_notifications_black_24dp" />
 
         <ListPreference
             android:key="preference_notification_delay"
             android:title="@string/settings_notification_delay"
             app:defaultValue="15"
             app:entries="@array/notification_delays"
-            app:entryValues="@array/notification_delay_values" />
+            app:entryValues="@array/notification_delay_values"
+            app:icon="@drawable/ic_notifications_paused_black_24dp" />
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory android:title="@string/settings_system">
@@ -31,7 +34,8 @@
             android:entryValues="@array/languages_alias"
             android:key="preference_language"
             android:title="@string/settings_language"
-            app:defaultValue="en" />
+            app:defaultValue="en"
+            app:icon="@drawable/ic_language_black_24dp" />
     </androidx.preference.PreferenceCategory>
 
 

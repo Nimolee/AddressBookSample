@@ -1,13 +1,15 @@
 package com.nimolee.addressbooksample.tools.worker
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.nimolee.addressbooksample.data.Repository
+import com.nimolee.addressbooksample.tools.notifications.OreoNotificationHelper
+import com.nimolee.addressbooksample.tools.notifications.PreOreoNotificationHelper
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
-import kotlin.random.Random
 
 class NotificationWorker(
     context: Context,
@@ -18,22 +20,24 @@ class NotificationWorker(
         return try {
             val repository: Repository by inject()
             val fact = repository.getRandomFactAwait()
-            var users = repository.getSavedContacts()
-            if (users.isNotEmpty()) {
-                users[Random.nextInt(0, users.size)].apply {
-                    Log.i("NotificationWorker", "${this.name} ${this.surname}")
-                }
-            } else {
-                users = repository.getRandomUsersAwait()
-                users[Random.nextInt(0, users.size)].apply {
-                    Log.i("NotificationWorker", "${this.name} ${this.surname} network")
-                }
-            }
+            showNotification(fact.source, fact.text)
             Result.success()
         } catch (exception: Exception) {
             Log.i("NotificationWorker", "Error")
             exception.printStackTrace()
             Result.failure()
+        }
+    }
+
+    private fun showNotification(title: String, body: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            OreoNotificationHelper(applicationContext).also {
+                it.notify(0, it.getFactNotification(title, body))
+            }
+        } else {
+            PreOreoNotificationHelper(applicationContext).also {
+                it.notify(0, it.getFactNotification(title, body))
+            }
         }
     }
 }
