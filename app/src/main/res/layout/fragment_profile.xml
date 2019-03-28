@@ -93,6 +93,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:inputType="textPersonName"
                     tools:text="@tools:sample/first_names" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,6 +114,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:inputType="textPersonName"
                     tools:text="@tools:sample/last_names" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -144,6 +146,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
+                    android:focusable="false"
                     android:layout_height="match_parent"
                     tools:text="1992-03-15" />
             </com.google.android.material.textfield.TextInputLayout>

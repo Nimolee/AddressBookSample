@@ -4,6 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/profile_avatar"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:contentDescription="@null"
+        android:fitsSystemWindows="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_user_image"
+        app:layout_collapseMode="parallax"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/profile_special"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/profile_back"
@@ -72,19 +94,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_edit_mode" />
 
-    <ImageView
-        android:id="@+id/profile_avatar"
-        android:layout_width="280dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        android:contentDescription="@null"
-        android:fitsSystemWindows="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/default_user_image"
-        app:layout_collapseMode="parallax"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -108,16 +117,6 @@
                 app:layout_constraintStart_toStartOf="@+id/profile_surname"
                 app:layout_constraintTop_toBottomOf="@+id/profile_surname" />
 
-            <View
-                android:id="@+id/profile_birthday_clicker"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@id/profile_birthday"
-                app:layout_constraintEnd_toEndOf="@id/profile_birthday"
-                app:layout_constraintStart_toStartOf="@id/profile_birthday"
-                app:layout_constraintTop_toTopOf="@id/profile_birthday" />
-
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/profile_name"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
@@ -135,6 +134,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:inputType="textPersonName"
                     tools:text="@tools:sample/first_names" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -155,6 +155,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:focusable="false"
                     tools:text="1992-03-15" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -175,6 +176,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:inputType="textPersonName"
                     tools:text="@tools:sample/last_names" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -219,16 +221,14 @@
                     tools:text="sample@sample.com" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <View
+                android:id="@+id/profile_birthday_clicker"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/profile_birthday"
+                app:layout_constraintEnd_toEndOf="@id/profile_birthday"
+                app:layout_constraintStart_toStartOf="@id/profile_birthday"
+                app:layout_constraintTop_toTopOf="@id/profile_birthday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/profile_special"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

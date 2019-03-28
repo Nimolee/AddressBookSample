@@ -178,6 +178,21 @@ class ProfileFragment : MainFragment() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        val datePattern = Regex("(.+)-(.+)-(.+)")
+        val dateRes = datePattern.find(profile_birthday.editText?.text.toString())
+            ?: error(profile_birthday.editText?.text.toString())
+        _viewModel.selectedContact?.name = profile_name.editText?.text.toString()
+        _viewModel.selectedContact?.surname = profile_surname.editText?.text.toString()
+        _viewModel.selectedContact?.gender = profile_gender.selectedItemPosition == 0
+        _viewModel.selectedContact?.email = profile_email.editText?.text.toString()
+        _viewModel.selectedContact?.phone = profile_phone.editText?.text.toString()
+        _viewModel.selectedContact?.birthday =
+            Date(dateRes.groupValues[1], dateRes.groupValues[2], dateRes.groupValues[3])
+        _viewModel.selectedContact?.photo = profile_avatar.drawable.toBitmap()
+        super.onSaveInstanceState(outState)
+    }
+
     private class GenderSpinnerAdapter : BaseAdapter() {
         private val _genders = arrayOf("Male", "Female")
 
