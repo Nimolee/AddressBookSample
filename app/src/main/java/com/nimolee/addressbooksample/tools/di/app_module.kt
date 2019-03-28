@@ -33,7 +33,7 @@ val databaseModule = module {
     }
 
     single(RANDOM_FACT_RETROFIT) {
-        Retrofit.Builder().baseUrl("http://randomuselessfact.appspot.com/")
+        Retrofit.Builder().baseUrl("https://randomuselessfact.appspot.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()

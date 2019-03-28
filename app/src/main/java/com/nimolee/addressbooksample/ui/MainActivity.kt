@@ -8,10 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.nimolee.addressbooksample.R
 import com.nimolee.addressbooksample.data.local.ContactsSharedPreferences
 import com.nimolee.addressbooksample.data.wrappers.Contact
 import com.nimolee.addressbooksample.data.wrappers.Date
+import com.nimolee.addressbooksample.tools.worker.NotificationWorker
 import com.nimolee.addressbooksample.ui.profile.ProfileFragment
 import com.nimolee.addressbooksample.ui.recomended.RecommendedFragment
 import com.nimolee.addressbooksample.ui.saved.SavedFragment
@@ -21,6 +25,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Locale.ENGLISH
+import java.util.concurrent.TimeUnit
 
 class MainActivity : FragmentActivity(), NavigationInterface {
     companion object {
@@ -84,6 +89,9 @@ class MainActivity : FragmentActivity(), NavigationInterface {
             openSecondaryFragment(ProfileFragment())
         }
         main_bottom_navigation.selectedItemId = R.id.main_menu_saved_contacts
+        val worker = PeriodicWorkRequestBuilder<NotificationWorker>(15, TimeUnit.MINUTES).build()
+        WorkManager.getInstance()
+            .enqueueUniquePeriodicWork("NotificationWorker", ExistingPeriodicWorkPolicy.REPLACE, worker)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
