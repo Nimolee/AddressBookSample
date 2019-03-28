@@ -89,12 +89,14 @@ class MainActivity : FragmentActivity(), NavigationInterface {
             openSecondaryFragment(ProfileFragment())
         }
         main_bottom_navigation.selectedItemId = R.id.main_menu_saved_contacts
-        val worker = PeriodicWorkRequestBuilder<NotificationWorker>(
-            _viewModel.notificationDelay.toLong(),
-            TimeUnit.MINUTES
-        ).build()
-        WorkManager.getInstance()
-            .enqueueUniquePeriodicWork("NotificationWorker", ExistingPeriodicWorkPolicy.REPLACE, worker)
+        if (_viewModel.isNotificationEnabled) {
+            val worker = PeriodicWorkRequestBuilder<NotificationWorker>(
+                _viewModel.notificationDelay.toLong(),
+                TimeUnit.MINUTES
+            ).build()
+            WorkManager.getInstance()
+                .enqueueUniquePeriodicWork("NotificationWorker", ExistingPeriodicWorkPolicy.REPLACE, worker)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

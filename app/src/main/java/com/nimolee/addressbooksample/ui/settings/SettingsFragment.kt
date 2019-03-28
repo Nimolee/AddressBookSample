@@ -5,12 +5,17 @@ import android.os.Bundle
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.nimolee.addressbooksample.R
 import com.nimolee.addressbooksample.tools.Constants
+import com.nimolee.addressbooksample.tools.worker.NotificationWorker
 import com.nimolee.addressbooksample.ui.MainActivity
 import com.nimolee.addressbooksample.ui.MainActivity.Companion.FAB_HIDED_MODE
 import com.nimolee.addressbooksample.ui.MainViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+import java.util.concurrent.TimeUnit
 
 class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var preference_notification: SwitchPreference
@@ -36,6 +41,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
         preference_notification.setOnPreferenceChangeListener { _, newValue ->
             newValue as Boolean
             preference_notification_delay.isEnabled = newValue
+            if (newValue) {
+                val worker = PeriodicWorkRequestBuilder<NotificationWorker>(
+                    _viewModel.notificationDelay.toLong(),
+                    TimeUnit.MINUTES
+                ).build()
+                WorkManager.getInstance()
+                    .enqueueUniquePeriodicWork("NotificationWorker", ExistingPeriodicWorkPolicy.REPLACE, worker)
+            } else {
+                WorkManager.getInstance().cancelUniqueWork("NotificationWorker")
+            }
             true
         }
         preference_notification_delay.setOnPreferenceChangeListener { preference, newValue ->
